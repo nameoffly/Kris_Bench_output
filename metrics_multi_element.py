@@ -31,11 +31,18 @@ parser.add_argument(
 )
 parser.add_argument("--category", type=str, default="count_change", help="category name")
 parser.add_argument("--results-dir", type=str, default="results", help="Base directory for model outputs")
+parser.add_argument("--lang", type=str, default=None,
+    help="Language code (en/zh/ar/es/ko/yo). Used in metrics output filename.")
+parser.add_argument("--output-dir", type=str, default=None,
+    help="Directory to save metrics (defaults to --results-dir)")
 args = parser.parse_args()
 
 # Constants
 BENCH_DIR = "KRIS_Bench"
 RESULTS_DIR = args.results_dir
+OUTPUT_DIR = args.output_dir if args.output_dir else RESULTS_DIR
+LANG = args.lang
+METRICS_FILENAME = f"metrics_{LANG}.json" if LANG else "metrics.json"
 MODELS = args.models
 CATEGORIES = ["multi-element_composition"]
 METRICS = ["consistency", "instruction_following", "image_quality"]
@@ -246,9 +253,9 @@ def run_multi_element_evaluation(models=None, categories=None, metrics=None, max
                 logging.error(f"Cannot load annotations {ann_path}: {e}")
                 continue
 
-            out_dir = os.path.join(RESULTS_DIR, model, category)
+            out_dir = os.path.join(OUTPUT_DIR, model, category)
             os.makedirs(out_dir, exist_ok=True)
-            metrics_file = os.path.join(out_dir, "metrics.json")
+            metrics_file = os.path.join(out_dir, METRICS_FILENAME)
 
             # Load existing metrics if present
             try:
