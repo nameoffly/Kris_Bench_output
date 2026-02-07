@@ -35,6 +35,8 @@ parser.add_argument("--lang", type=str, default=None,
     help="Language code (en/zh/ar/es/ko/yo). Used in metrics output filename.")
 parser.add_argument("--output-dir", type=str, default=None,
     help="Directory to save metrics (defaults to --results-dir)")
+parser.add_argument("--base-url", type=str, default=None,
+    help="OpenAI API base URL (defaults to OPENAI_BASE_URL env var)")
 args = parser.parse_args()
 
 # Constants
@@ -49,7 +51,8 @@ METRICS = ["consistency", "instruction_following", "image_quality"]
 
 # Initialize OpenAI client
 api_key = os.environ.get("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key)
+base_url = args.base_url or os.environ.get("OPENAI_BASE_URL")
+client = OpenAI(api_key=api_key, base_url=base_url) if base_url else OpenAI(api_key=api_key)
 
 def encode_image_to_base64(image_path):
     """Encode an image file to a base64 string."""

@@ -4,7 +4,7 @@
 #   ./eval_bagel.sh                    # Evaluate all languages
 #   ./eval_bagel.sh en zh              # Evaluate English and Chinese only
 
-LANGS="${@:-en zh ar es ko yo}"
+LANGS="${@:-en zh ar yo}"
 MODEL="bagel"
 OUTPUT_DIR="eval_results"
 
