@@ -1,0 +1,25 @@
+# Benchmark data (large dataset)
+KRIS_Bench/
+
+# Generated model outputs
+results/
+output_bagel/
+output_bagel.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Translation caches
+translate_cache.json
+translate_cache_ins.json
+
+# Merged final data
+final_data*.json
+
+# Environment
+.venv/
+.env
+
+# Claude Code
+.claude/
